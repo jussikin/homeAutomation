@@ -1,0 +1,23 @@
+{
+"db":{
+    "host": "localhost",
+    "user": "foo",
+    "password": "bar",
+    "database": "db"},
+"redis":{
+    "radiotopic":"radiodata",
+    "host":"127.0.0.1",
+    "port":"6379"
+},
+"ow":{
+  "host":"localhost",
+  "port":"4304"
+},
+"udp":{
+  "ip":"127.1.1.2",
+  "displayip":"127.1.1.2",
+  "port":"8888",
+  "displayport":"8888"
+}
+
+}
