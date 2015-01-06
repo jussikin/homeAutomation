@@ -14,8 +14,8 @@ var client = redis.createClient(redisConfig.port,redisConfig.host);
 Promise.promisifyAll(client)
 var dclient = dgram.createSocket("udp4");
 var port = config.get('udp').port
-var host = config.get('udp').host
-
+var host = config.get('udp').ip
+ 
 
 var limit = trickle(1, 1300);
 
