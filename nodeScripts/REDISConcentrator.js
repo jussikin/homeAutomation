@@ -1,7 +1,6 @@
-var db = require('mysql-promise')();
 var config = require('config');
 var redis = require("redis")
-var debug = require('debug')('concentrator')
+var debug = require('debug')('REDISconcentrator')
 var util = require('util')
 var _=require('lodash')
 var Client = require("owfs").Client;
@@ -18,15 +17,13 @@ var TYPE_SWITCH =     1<<2
 var TYPE_ROBOT  =     1<<1
 var TYPE_PREASURE =   1
 
-db.configure(
-    config.get('db')
-);
 var owcon = new Client(config.get('ow').host,config.get('ow').port);
 
+var sensors = require('./config/sensors.json')
 function getSensorList(){
-  return db.query('select * from targets')
-  .then(function(result){return result[0]})
+  return Promise.resolve(sensors)
 }
+
 
 var redisConfig = config.get('redis')
 var senderClient = redis.createClient(redisConfig.port,redisConfig.host);
@@ -62,7 +59,7 @@ function waitAndActForEventsInRedis(sensorlist){
                                ":"+sensor.type+":"+
                                Math.floor(new Date().getTime()/1000)+
                                ":"+sensor.id
-          senderClient.hset('sensors2',sensor.id,stringToInsert)
+          senderClient.hset('sensors',sensor.id,stringToInsert)
           console.log("temp is:"+temp)
           console.log("sensor object is:"+util.inspect(sensor))
           console.log("sensorlist:"+util.inspect(sensolist))

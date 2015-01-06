@@ -1,7 +1,6 @@
-var db = require('mysql-promise')();
 var config = require('config');
 var redis = require("redis")
-var debug = require('debug')('concentrator')
+var debug = require('debug')('UDPconcentrator')
 var util = require('util')
 var _=require('lodash')
 var Client = require("owfs").Client;
@@ -18,15 +17,11 @@ var TYPE_SWITCH =     1<<2
 var TYPE_ROBOT  =     1<<1
 var TYPE_PREASURE =   1
 
-db.configure(
-    config.get('db')
-);
-
-
+var sensors = require('./config/sensors.json')
 function getSensorList(){
-  return db.query('select * from targets')
-  .then(function(result){return result[0]})
+  return Promise.resolve(sensors)
 }
+
 
 var redisConfig = config.get('redis')
 var senderClient = redis.createClient(redisConfig.port,redisConfig.host);
@@ -55,6 +50,12 @@ function waitAndActForUDPEvents(sensorlist){
     console.log("server got: " + msg + " from " +rinfo.address + ":" + rinfo.port);
     var splitted = msg.toString().split(':')
     var id = splitted[0].trim()
+    if(splitted[1]==undefined){
+      console.log("cannot interpered msg:"+msg)
+      return
+    }
+
+
     var value = splitted[1].trim()
     getSensorList().then(function (sensorlist){
         var sensor = _.find(sensorlist, function(sensori) {
@@ -70,7 +71,7 @@ function waitAndActForUDPEvents(sensorlist){
                              ":"+sensor.type+":"+
                              Math.floor(new Date().getTime()/1000)+
                              ":"+sensor.id
-        senderClient.hset('sensors2',sensor.id,stringToInsert)
+        senderClient.hset('sensor',sensor.id,stringToInsert)
     })
   });
 

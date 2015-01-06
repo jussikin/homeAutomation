@@ -1,9 +1,4 @@
 {
-"db":{
-    "host": "localhost",
-    "user": "foo",
-    "password": "bar",
-    "database": "db"},
 "redis":{
     "radiotopic":"radiodata",
     "host":"127.0.0.1",
