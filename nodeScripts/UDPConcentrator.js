@@ -63,6 +63,13 @@ function waitAndActForUDPEvents(sensorlist){
               return true
           return false
         })
+	if(sensor==undefined)
+	    sensor = _.find(sensorlist, function(sensori) {
+		if(sensori.id==id)
+		    return true
+		return false
+            })
+
         if(sensor==undefined) return
         console.log('id:'+id)
         console.log('value:'+value)
