@@ -1,4 +1,3 @@
-var db = require('mysql-promise')();
 var config = require('config');
 var redis = require("redis")
 var debug = require('debug')('concentrator')
@@ -18,9 +17,6 @@ var TYPE_SWITCH =     1<<2
 var TYPE_ROBOT  =     1<<1
 var TYPE_PREASURE =   1
 
-db.configure(
-    config.get('db')
-);
 var owcon = new Client(config.get('ow').host,config.get('ow').port);
 Promise.promisifyAll(owcon)
 var sensors = require('./config/sensors.json')
