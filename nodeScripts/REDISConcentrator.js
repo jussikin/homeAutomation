@@ -59,7 +59,7 @@ function waitAndActForEventsInRedis(sensorlist){
                                ":"+sensor.type+":"+
                                Math.floor(new Date().getTime()/1000)+
                                ":"+sensor.id
-          senderClient.hset('sensors',sensor.id,stringToInsert)
+          senderClient.hset('sensor',sensor.id,stringToInsert)
           console.log("temp is:"+temp)
           console.log("sensor object is:"+util.inspect(sensor))
           console.log("sensorlist:"+util.inspect(sensolist))
