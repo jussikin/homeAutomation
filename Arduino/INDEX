@@ -1,0 +1,1 @@
+HomeDataCollector.ino = Simple arduino program that reads sensor value fron DHT11 sensor and sends it via UDP into server
