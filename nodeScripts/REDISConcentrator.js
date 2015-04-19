@@ -51,8 +51,8 @@ function waitAndActForEventsInRedis(sensorlist){
 
         if(type & TYPE_1_WIRE_TEMP){
           console.log("sensore is onewire sensor and should be decoded and sent to redis")
-          var num1=parseInt(message.slice(2,4))
-          var num2=parseInt(message.slice(4,6))
+            var num1=parseInt(message.slice(2,4),16)
+            var num2=parseInt(message.slice(4,6),16)
           var temp = num1+(num2/100)
           var sensor = _.find(sensolist, {url:address.toString()});
           var stringToInsert = temp+":"+sensor.name+
@@ -61,9 +61,7 @@ function waitAndActForEventsInRedis(sensorlist){
                                ":"+sensor.id
           senderClient.hset('sensor',sensor.id,stringToInsert)
           console.log("temp is:"+temp)
-          console.log("sensor object is:"+util.inspect(sensor))
-          console.log("sensorlist:"+util.inspect(sensolist))
-          console.log("string to insert:"+stringToInsert)
+           console.log("string to insert:"+stringToInsert)
         }
 
 
