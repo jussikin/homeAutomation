@@ -1,0 +1,14 @@
+{
+  "name": "nrfReceiver",
+  "version": "1.0.0",
+  "description": "Receives radio packets coming from sensors and sends them ahead via mgtt",
+  "main": "receiver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jussi Kinnunen",
+  "license": "ISC",
+  "dependencies": {
+    "nrf": "^0.8.3"
+  }
+}
