@@ -9,6 +9,9 @@
   "author": "Jussi Kinnunen",
   "license": "ISC",
   "dependencies": {
-    "nrf": "^0.8.3"
+    "nrf": "^0.8.3",
+    "mqtt": "~1.1.3",
+    "redis": "~0.12.1",
+    "buffertools": "~2.1.2"
   }
 }
