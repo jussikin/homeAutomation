@@ -1,5 +1,5 @@
 var nrf = require('nrf')
-var radio = nrf.connect("/dev/spidev0.0", 18)
+var radio = nrf.connect("/dev/spidev0.0", 18,17)
 var mqtt    = require('mqtt');
 var mqclient  = mqtt.connect();
 var redis = require("redis"),
