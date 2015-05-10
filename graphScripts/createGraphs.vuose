@@ -1,0 +1,157 @@
+#!/bin/bash
+
+XSize=800
+YSize=300
+ShortTime=60d
+OutDir=/web/lampotila2/kuukausi/graph
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Palkinpaa \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ DEF:b=/opt/weatherlogger/rra/auto.rrd:temp:AVERAGE \
+ DEF:c=/opt/weatherlogger/rra/palkinpaa.rrd:temp:AVERAGE \
+ LINE1:b#0000FF:auto \
+ LINE1:c#FF00FF:palkinpaa \
+ GPRINT:b:MIN:Min%8.2lf%s\
+ GPRINT:b:AVERAGE:Avg%8.2lf%s\
+ GPRINT:b:MAX:Max%8.2lf%s\
+ GPRINT:b:LAST:Last%8.2lf%s > $OutDir/palkinpaa.png
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Kasvihuone \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ DEF:b=/opt/weatherlogger/rra/kasvihuone.rrd:temp:AVERAGE \
+ DEF:c=/opt/weatherlogger/rra/vesi.rrd:temp:AVERAGE \
+ LINE1:b#0000FF:kasvihuone \
+ LINE1:c#FF00FF:vesi \
+ GPRINT:b:MIN:Min%8.2lf%s\
+ GPRINT:b:AVERAGE:Avg%8.2lf%s\
+ GPRINT:b:MAX:Max%8.2lf%s\
+ GPRINT:b:LAST:Last%8.2lf%s > $OutDir/kasvihuone.png
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Ulkotilanne \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ DEF:a=/opt/weatherlogger/rra/kasvihuone.rrd:temp:AVERAGE \
+ DEF:b=/opt/weatherlogger/rra/ulko.rrd:temp:AVERAGE \
+ DEF:c=/opt/weatherlogger/rra/puutarha.rrd:temp:AVERAGE \
+ DEF:d=/opt/weatherlogger/rra/kukkatarha.rrd:temp:AVERAGE \
+ DEF:e=/opt/weatherlogger/rra/saunamokki.rrd:temp:AVERAGE \
+ LINE1:a#0000FF:kasvihuone \
+ LINE1:b#00FF00:ulkolampo \
+ LINE1:c#008844:puutarha \
+ LINE1:d#88BB00:kukkatarha \
+ LINE1:e#DD0033:saunamokki \
+ GPRINT:b:MIN:Min%8.2lf%s\
+ GPRINT:b:AVERAGE:Avg%8.2lf%s\
+ GPRINT:b:MAX:Max%8.2lf%s\
+ GPRINT:b:LAST:Last%8.2lf%s > $OutDir/ulkotilanne.png
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=MokinTilanne \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ DEF:b=/opt/weatherlogger/rra/saunamokki.rrd:temp:AVERAGE \
+ DEF:c=/opt/weatherlogger/rra/kosteus.rrd:moisture:AVERAGE \
+ DEF:d=/opt/weatherlogger/rra/ulkokosteus.rrd:moisture:AVERAGE \
+ LINE1:c#55AAFF:sisakosteus \
+ LINE1:d#FF0011:ulkokosteus \
+ LINE1:b#DD00AA:lampo > $OutDir/mokki.png
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Ylakerta \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ DEF:b=/opt/weatherlogger/rra/ylakerta.rrd:temp:AVERAGE \
+ DEF:c=/opt/weatherlogger/rra/sannanhuone.rrd:temp:AVERAGE \
+ DEF:d=/opt/weatherlogger/rra/jussinhuone.rrd:temp:AVERAGE \
+ LINE1:b#00BB55:avg \
+ LINE1:d#002288:jussinhuone \
+ LINE1:c#AADD00:sannanhuone \
+ GPRINT:b:MIN:Min%8.2lf%s\
+ GPRINT:b:AVERAGE:Avg%8.2lf%s\
+ GPRINT:b:MAX:Max%8.2lf%s\
+ GPRINT:b:LAST:Last%8.2lf%s > $OutDir/ylakerta.png
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Alakerta \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ DEF:b=/opt/weatherlogger/rra/keittio.rrd:temp:AVERAGE \
+ DEF:c=/opt/weatherlogger/rra/olohuone.rrd:temp:AVERAGE \
+ DEF:d=/opt/weatherlogger/rra/kuisti.rrd:temp:AVERAGE \
+ DEF:e=/opt/weatherlogger/rra/kodinhoitohuone.rrd:temp:AVERAGE \
+ DEF:g=/opt/weatherlogger/rra/makuuhuone.rrd:temp:AVERAGE \
+ LINE1:b#FF0000:keittio \
+ LINE1:c#FFBB00:olohuone \
+ LINE1:d#0088BB:kuisti \
+ LINE1:e#0033DD:kodinhoitohuone \
+ LINE1:g#DD55FF:makkari \
+ GPRINT:g:MIN:Min%8.2lf%s\
+ GPRINT:g:AVERAGE:Avg%8.2lf%s\
+ GPRINT:g:MAX:Max%8.2lf%s\
+ GPRINT:g:LAST:Last%8.2lf%s > $OutDir/alakerta.png
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Sademaara \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ --step=3600 \
+ DEF:b=/opt/weatherlogger/rra/sademaara.rrd:rain:AVERAGE \
+ CDEF:c=b,1983,* \
+ "AREA:c#0000FF:sade mm"> $OutDir/sade.png
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Lammitys \
+ --imgformat=PNG \
+ --width=$XSize \
+ --base=1000 \
+ --height=$YSize \
+ --right-axis 1:0 \
+ --interlaced \
+ DEF:f=/opt/weatherlogger/rra/muuri.rrd:temp:AVERAGE \
+ LINE1:f#DD3300:muuri \
+ GPRINT:f:MIN:Min%8.2lf%s\
+ GPRINT:f:AVERAGE:Avg%8.2lf%s\
+ GPRINT:f:MAX:Max%8.2lf%s\
+ GPRINT:f:LAST:Last%8.2lf%s > $OutDir/lammitys.png
+

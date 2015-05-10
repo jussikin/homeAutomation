@@ -1,0 +1,16 @@
+
+rrdtool graph - \
+ --start=end-$ShortTime \
+ --title=Ilmanpaine \
+ --vertical-label 'Preassure in Millibars' \
+ --imgformat=PNG \
+ --width=$XSize \
+ --height=$YSize \
+ --interlaced \
+ --step=300 \
+ -A -l 900 -u 1100 \
+ -L 10 -X 0 \
+ DEF:b=/home/jussikin/rrd/ulkopaine.rrd:preassure:AVERAGE \
+ CDEF:c=b,100,/ \
+ "LINE:c#0000FF:paine"> $OutDir/preassure.png
+
