@@ -6,10 +6,4 @@ ShortTime=60d
 OutDir=~/public_html/kuukausi/graphs/
 RRADIR=/home/jussikin/rrd
 
-source palkinpaa.sh
-source kasvihuone.sh
-source ulko.sh
-source mokki.sh
-source ylakerta.sh
-source alakerta.sh
-source lammitys.sh
+source graafit.sh
