@@ -1,0 +1,9 @@
+source alakerta.sh
+source kasvihuone.sh
+source lammitys.sh
+source mokki.sh
+source paine.sh
+source palkinpaa.sh
+source sademaara.sh
+source ulko.sh
+source ylakerta.sh
