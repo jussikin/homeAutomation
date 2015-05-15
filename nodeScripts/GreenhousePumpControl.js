@@ -51,7 +51,7 @@ client.on("message", function (channel, message) {
                  console.log('turned off by timeout');
                  client2.publish('tellduscmd','4:OFF');
                  setShutdown();
-             },70000);
+             },180000 );
          }
      }
      if(turnedON && message == "HIGH"){
