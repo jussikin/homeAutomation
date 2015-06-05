@@ -51,7 +51,7 @@ function doTheStrut(){
         lastTickFlow=num;
         var millisRain = diff*multiplier;
         console.log("millis of flow in 5 minutes:"+millisRain);
-        client.hset("sensor","24",millisRain+":waterflow:384:"+new Date().getTime().toString().replace(/\d\d\d$/,'')+":15");
+        client.hset("sensor","24",millisRain+":waterflow:384:"+new Date().getTime().toString().replace(/\d\d\d$/,'')+":24");
   });
 
 }
