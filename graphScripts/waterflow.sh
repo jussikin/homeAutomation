@@ -12,4 +12,4 @@ rrdtool graph - \
  --step=3600 \
  DEF:b=/home/jussikin/rrd/waterflow.rrd:rain:AVERAGE \
  CDEF:c=b,12,* \
- "AREA:c#0000FF:sade mm"> $OutDir/waterflow.png
+ "AREA:c#0000FF:kastelua litraa"> $OutDir/waterflow.png
