@@ -26,7 +26,7 @@ void setup_wifi() {
 void setup() {
   byte addr[8];
 
-  //Serial.begin(9600);
+  Serial.begin(9600);
   Serial.println("Starting search now");
   while (ds.search(addr)) {
     Serial.println("Found Sensor.. Addindg it");
