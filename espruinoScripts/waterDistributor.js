@@ -1,6 +1,7 @@
-var WIFI_NAME = "ssid";
+
+var WIFI_NAME = "name";
 var WIFI_OPTIONS = { password : "pw" };
-var server = "10.102.27.90";
+var server = "address";
 
 //Distrubutor solenoids
 var BYPASS = B3;
@@ -14,6 +15,7 @@ var STATUS_normal='normal';
 var STATUS_greenhouse1='g1';
 var STATUS_greenhouse2='g2';
 var messageTime = null;
+var kicks = 0;
 
 var options = { 
     client_id : "water-automat", 
@@ -72,8 +74,8 @@ mqtt.on('publish', function (pub) {
       setGreenhouse2();
   }
   if(pub.topic=="watering/watchdog"){
-    messageTime = getTime();
-    console.log(messageTime);
+    E.kickWatchdog();
+    kicks++;
     return;
   }
   sendStatus();
@@ -82,20 +84,16 @@ mqtt.on('publish', function (pub) {
 function sendStatus(){
   var status = {
    overflow:!(G2OWERFLOW.read()),
-   status:state
+   status:state,
+    kicks:kicks
   };
-  mqtt.publish("watering/status",JSON.stringify(status));
-  
+  mqtt.publish("watering/status",JSON.stringify(status)); 
 }
 
 setInterval(function (){
   sendStatus();
-}, 100000);
+}, 15000);
 
-setInterval(function (){
-  if(messageTime+300<getTime())
-    load();
-}, 110000);
 
 setWatch(function(e) 
          {sendStatus();}, 
@@ -105,8 +103,10 @@ setWatch(function(e)
 function onInit(){
   console.log("on init");
   messageTime = getTime();
+  kicks=0;
   G2OWERFLOW.mode('input_pullup');
   setNormalState();
+  E.enableWatchdog(25, false);  
   wifi.connect(WIFI_NAME, WIFI_OPTIONS, function(err) {
       if (err) {
         console.log("Connection error: "+err);
